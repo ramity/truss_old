@@ -6,8 +6,11 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     volumes:
-      - "./backend/app:/var/www/"
+      - "./backend/app:/var/www/symfony"
+      - "./backend/keys:/git/keys"
+      - "./backend/repos:/git/repos"
     ports:
+      - "22:22"
       - "80:80"
     links:
       - "mysql:mysql"
@@ -21,7 +24,7 @@ services:
     volumes:
       - "./mysql/data:/var/lib/mysql"
     env_file:
-          - ".env"
+      - ".env"
   phpmyadmin:
     container_name: truss_phpmyadmin
     build:
@@ -32,14 +35,4 @@ services:
     links:
       - "mysql:mysql"
     env_file:
-          - ".env"
-  git:
-    container_name: truss_git
-    build:
-      context: ./git
-      dockerfile: Dockerfile
-    ports:
-      - "22:22"
-    volumes:
-      - "./git/keys:/git-server/keys"
-      - "./git/repos:/git-server/repos"
+      - ".env"
