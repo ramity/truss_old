@@ -1,0 +1,37 @@
+version: '3.4'
+services:
+  backend:
+    container_name: truss_backend
+    image: php:7.1-apache
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    volumes:
+      - "./app:/var/www/"
+    ports:
+      - "80:80"
+    links:
+      - "mysql:mysql"
+  mysql:
+    container_name: truss_mysql
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    ports:
+      - "3306:3306"
+    volumes:
+      - "./data:/var/lib/mysql"
+  phpmyadmin:
+    container_name: truss_phpmyadmin
+    build:
+      context: ./phpmyadmin
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+  git:
+    container_name: truss_git
+    build:
+      context: ./git
+      dockerfile: Dockerfile
+    ports:
+      - "22:22"
