@@ -1,4 +1,4 @@
-FROM phpmyadmin:phpmyadmin
+FROM phpmyadmin/phpmyadmin:latest
 
 MAINTAINER Lewis Brown "github.com/ramity"
 

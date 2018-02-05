@@ -15,13 +15,13 @@ RUN mkdir /git-server/keys \
   && echo git:12345 | chpasswd \
   && mkdir /home/git/.ssh
 
-COPY ../../git/commands /home/git/git-shell-commands
-COPY ../../git/keys /git-server/keys
+COPY ./commands /home/git/git-shell-commands
+COPY ./keys /git-server/keys
 
 # sshd_config file is edited for enable access key and disable access password
 COPY ./config/sshd_config /etc/ssh/sshd_config
-COPY start.sh start.sh
+COPY start.sh /usr/bin/start.sh
 
 EXPOSE 22
 
-CMD ["sh", "start.sh"]
+CMD start.sh
