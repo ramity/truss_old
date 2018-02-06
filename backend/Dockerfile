@@ -9,7 +9,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # https://goo.gl/jx1BQa
 RUN apt-get update
-RUN apt-get install -y openssh-server git
+RUN apt-get install -y openssh-server git zip unzip
 
 RUN ssh-keygen -A
 
