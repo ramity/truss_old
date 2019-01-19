@@ -1,7 +1,7 @@
 version: '3.5'
 services:
   apache:
-    container_name: lens_apache
+    container_name: truss_apache
     build:
       context: ./apache
       dockerfile: Dockerfile
@@ -10,7 +10,7 @@ services:
     ports:
       - 80:80
   mysql:
-    container_name: lens_mysql
+    container_name: truss_mysql
     build:
       context: ./mysql
       dockerfile: Dockerfile
@@ -21,7 +21,7 @@ services:
     env_file:
       - ./.env
   phpmyadmin:
-    container_name: lens_phpmyadmin
+    container_name: truss_phpmyadmin
     build:
       context: ./phpmyadmin
       dockerfile: Dockerfile
