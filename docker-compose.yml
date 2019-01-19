@@ -1,22 +1,16 @@
-version: '3.4'
+version: '3.5'
 services:
-  backend:
-    container_name: truss_backend
+  apache:
+    container_name: lens_apache
     build:
-      context: ./backend
+      context: ./apache
       dockerfile: Dockerfile
     volumes:
-      - ./backend/app:/var/www/symfony
-      - ./backend/keys:/home/git/keys
-      - ./backend/repos:/home/git/repos
-      - ./backend/commands:/home/git/commands
+      - ./symfony:/var/www/symfony
     ports:
-      - 22:22
       - 80:80
-    links:
-      - mysql:mysql
   mysql:
-    container_name: truss_mysql
+    container_name: lens_mysql
     build:
       context: ./mysql
       dockerfile: Dockerfile
@@ -27,18 +21,11 @@ services:
     env_file:
       - ./.env
   phpmyadmin:
-    container_name: truss_phpmyadmin
+    container_name: lens_phpmyadmin
     build:
       context: ./phpmyadmin
       dockerfile: Dockerfile
     ports:
       - 8080:80
-    links:
-      - mysql:mysql
     env_file:
       - ./.env
-  testuser:
-    container_name: truss_testuser
-    build:
-      context: ./testuser
-      dockerfile: Dockerfile

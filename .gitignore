@@ -1,5 +1,2 @@
-.idea/*
-git/keys/*
-git/repos/*
-mysql/data/*
-.env
+### custom ###
+/.env
