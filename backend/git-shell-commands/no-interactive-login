@@ -1,0 +1,5 @@
+#!/bin/sh
+
+printf '\n%s\n\n' "You've successfully authenticated to the server as $USER user, but interactive sessions are disabled."
+
+exit 128

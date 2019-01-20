@@ -1,21 +1,25 @@
 version: '3.5'
 services:
-  apache:
-    container_name: truss_apache
+  backend:
+    container_name: truss_backend
     build:
-      context: ./apache
+      context: ./backend
       dockerfile: Dockerfile
     volumes:
       - ./symfony:/var/www/symfony
+      - ./backend/.ssh:/home/git/.ssh
+      - ./backend/repos:/home/git/repos
+      - ./backend/git-shell-commands:/home/git/git-shell-commands
     ports:
-      - 80:80
+      - "80:80"
+      - "22:22"
   mysql:
     container_name: truss_mysql
     build:
       context: ./mysql
       dockerfile: Dockerfile
     ports:
-      - 3306:3306
+      - "3306:3306"
     volumes:
       - ./mysql/data:/var/lib/mysql
     env_file:
@@ -26,13 +30,11 @@ services:
       context: ./phpmyadmin
       dockerfile: Dockerfile
     ports:
-      - 8080:80
+      - "8080:80"
     env_file:
       - ./.env
-  gitserver:
-    container_name: truss_gitserver
+  testserver:
+    container_name: truss_testserver
     build:
-      context: ./gitserver
+      context: ./testserver
       dockerfile: Dockerfile
-    ports:
-      - 22:22
