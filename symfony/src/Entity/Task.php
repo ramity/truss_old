@@ -24,7 +24,8 @@ class Task
     private $title;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(name="assignedUser_id", referencedColumnName="id")
      */
     private $assignedTo;
 
@@ -35,6 +36,10 @@ class Task
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User")
+     * @ORM\JoinTable(name="tasks_subscribers",
+     *      joinColumns={@ORM\JoinColumn(name="task_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
      */
     private $subscribers;
 

@@ -24,7 +24,7 @@ class Review
     private $title;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $summary;
 
@@ -35,11 +35,19 @@ class Review
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User")
+     * @ORM\JoinTable(name="reviews_reviewers",
+     *      joinColumns={@ORM\JoinColumn(name="review_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
      */
     private $reviewers;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User")
+     * @ORM\JoinTable(name="reviews_subscribers",
+     *      joinColumns={@ORM\JoinColumn(name="review_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     * )
      */
     private $subscribers;
 
