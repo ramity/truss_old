@@ -7,9 +7,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\ReviewRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\TaskRepository")
  */
-class Review
+class Task
 {
     /**
      * @ORM\Id()
@@ -24,24 +24,29 @@ class Review
     private $title;
 
     /**
-     * @ORM\Column(type="text")
-     */
-    private $summary;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private $testPlan;
-
-    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User")
      */
-    private $reviewers;
+    private $assignedTo;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User")
      */
     private $subscribers;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $updatedAt;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User")
@@ -51,7 +56,7 @@ class Review
 
     public function __construct()
     {
-        $this->reviewers = new ArrayCollection();
+        $this->assignedTo = new ArrayCollection();
         $this->subscribers = new ArrayCollection();
     }
 
@@ -72,52 +77,40 @@ class Review
         return $this;
     }
 
-    public function getSummary(): ?string
-    {
-        return $this->summary;
-    }
-
-    public function setSummary(string $summary): self
-    {
-        $this->summary = $summary;
-
-        return $this;
-    }
-
-    public function getTestPlan(): ?string
-    {
-        return $this->testPlan;
-    }
-
-    public function setTestPlan(?string $testPlan): self
-    {
-        $this->testPlan = $testPlan;
-
-        return $this;
-    }
-
     /**
      * @return Collection|User[]
      */
-    public function getReviewers(): Collection
+    public function getAssignedTo(): Collection
     {
-        return $this->reviewers;
+        return $this->assignedTo;
     }
 
-    public function addReviewer(User $reviewer): self
+    public function addAssignedTo(User $assignedTo): self
     {
-        if (!$this->reviewers->contains($reviewer)) {
-            $this->reviewers[] = $reviewer;
+        if (!$this->assignedTo->contains($assignedTo)) {
+            $this->assignedTo[] = $assignedTo;
         }
 
         return $this;
     }
 
-    public function removeReviewer(User $reviewer): self
+    public function removeAssignedTo(User $assignedTo): self
     {
-        if ($this->reviewers->contains($reviewer)) {
-            $this->reviewers->removeElement($reviewer);
+        if ($this->assignedTo->contains($assignedTo)) {
+            $this->assignedTo->removeElement($assignedTo);
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
@@ -144,6 +137,30 @@ class Review
         if ($this->subscribers->contains($subscriber)) {
             $this->subscribers->removeElement($subscriber);
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }
