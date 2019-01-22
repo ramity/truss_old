@@ -30,13 +30,6 @@ RUN docker-php-ext-install intl
 
 # Git server steps
 RUN adduser --disabled-password --gecos "" git
-USER git
-RUN mkdir ~/.ssh
-RUN chmod 700 ~/.ssh
-RUN touch ~/.ssh/authorized_keys
-RUN chmod 600 ~/.ssh/authorized_keys
-RUN ssh-keygen -A
-USER root
 RUN usermod -s $(which git-shell) git
 
 WORKDIR /var/www/symfony
